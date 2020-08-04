@@ -1,5 +1,10 @@
-enum TextureKeys {
-  TL_DIRT = 'tile_dirt'
-}
-
-export default TextureKeys;
+export const TextureKeys = {
+  TL_DIRT: {
+    key: 'dirt',
+    frame: 104
+  },
+  TL_ROCKY_DIRT: {
+    key: 'dirt',
+    frame: 103
+  }
+};

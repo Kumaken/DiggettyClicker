@@ -4,7 +4,7 @@ import DepthConfig from '../Config/DepthConfig';
 import BubbleColorConfig from '../Config/BubbleColorConfig';
 import { Color } from '../Config/ColorConfig';
 import { ITile } from '../Interfaces/ITile';
-import TextureKeys from '../Config/TextureKeys';
+import { TextureKeys } from '../Config/TextureKeys';
 
 export default class Tile extends Phaser.Physics.Arcade.Sprite
   implements ITile {

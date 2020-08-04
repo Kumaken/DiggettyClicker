@@ -1,5 +1,6 @@
 enum GameEvents {
-  PreloadFinished = 'preload-finished'
+  PreloadFinished = 'PRELOAD_FINISHED',
+  TopmostPlatformDestroyed = 'TOPMOST_PLATFORM_DESTROYED'
 }
 
 export default GameEvents;

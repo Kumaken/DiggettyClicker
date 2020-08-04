@@ -5,13 +5,16 @@ import BubbleColorConfig from '../Config/BubbleColorConfig';
 import { Color } from '../Config/ColorConfig';
 import { ITile } from '../Interfaces/ITile';
 import { ITilePool } from '../Interfaces/ITilePool';
-import TextureKeys from '../Config/TextureKeys';
+import { TextureKeys } from '../Config/TextureKeys';
 import Tile from './Tile';
 import TilePool from './TilePool';
+import Player from './Player';
+import GameEvents from '../Config/GameEvents';
 
 export default class Platform {
-  private row: ITile[] = [];
-  private rowSize: number = 10;
+  public row: ITile[] = [];
+  private rowSize: number = 9;
+
   private scene: Phaser.Scene;
   private pool: ITilePool;
   private textureKey: string;
@@ -20,35 +23,66 @@ export default class Platform {
   private effLeftX: number;
   private tileSize: Phaser.Structs.Size;
 
-  constructor(scene: Phaser.Scene, pool: ITilePool, key: string, y: number) {
+  // Platform Stats:
+  private toughness: number;
+
+  constructor(
+    scene: Phaser.Scene,
+    pool: ITilePool,
+    key: string,
+    y: number,
+    tileSize: Phaser.Structs.Size,
+    frame: number = 104
+  ) {
     this.scene = scene;
     this.pool = pool;
     this.textureKey = key;
-    this.effLeftX = AlignTool.getXfromScreenWidth(scene, 0.1);
-    this.effRightX = AlignTool.getXfromScreenWidth(scene, 0.9);
+    this.effLeftX = AlignTool.getXfromScreenWidth(scene, 0.115);
+    this.effRightX = AlignTool.getXfromScreenWidth(scene, 0.8);
     this.y = y;
-    // deduce each tile size dynamically:
-    const sample = this.pool.spawn(0, 0, this.textureKey, 0);
-    this.tileSize = new Phaser.Structs.Size(
-      sample.displayWidth,
-      sample.displayHeight
-    );
-    this.pool.despawn(sample);
-    this.generateRow();
+    this.tileSize = tileSize;
+    // Stats initialization:
+    this.toughness = 0;
+    this.generateRow(frame);
   }
 
-  generateRow() {
+  generateRow(frame: number) {
     let curX = this.effLeftX;
+
     for (let i = 0; i < this.rowSize; i += 1) {
       // Todo: randomize frame here
       const newTile: ITile = this.pool.spawn(
         curX,
         this.y,
         this.textureKey,
-        104
+        frame // 104 frame number
       );
       this.row.push(newTile);
       curX += this.tileSize.width;
+    }
+    curX = this.effLeftX;
+  }
+
+  shiftAllTilesUpward() {
+    this.row.forEach((tile) => {
+      tile.y -= this.tileSize.height;
+    });
+  }
+
+  // Events:
+  onDestruction() {
+    this.scene.game.events.emit(GameEvents.TopmostPlatformDestroyed);
+  }
+
+  onClickPlatform() {
+    this.damage(Player.clickDamage);
+  }
+
+  // Platform stats methods:
+  damage(amount: number) {
+    if (amount >= this.toughness) this.onDestruction();
+    else {
+      this.toughness -= amount;
     }
   }
 }

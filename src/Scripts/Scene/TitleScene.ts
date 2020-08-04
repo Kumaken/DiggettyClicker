@@ -1,7 +1,6 @@
 import * as Phaser from 'phaser';
 import FpsText from '../Object/FpsText';
 import { TextPopUp, TextConfig } from '../Util/TextPopUp';
-import TextureKeys from '../Config/TextureKeys';
 import SceneKeys from '../Config/SceneKeys';
 
 export default class TitleScene extends Phaser.Scene {

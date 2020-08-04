@@ -6,6 +6,7 @@ import 'phaser';
 import PreloadScene from '../Scene/PreloadScene';
 import Tile from './Tile';
 import { ITilePool } from '../Interfaces/ITilePool';
+import AlignTool from '../Util/AlignTool';
 
 export default class TilePool extends Phaser.Physics.Arcade.Group
   implements ITilePool {
@@ -51,15 +52,12 @@ export default class TilePool extends Phaser.Physics.Arcade.Group
       // tile.randomizeColor();
     }
 
-    // if (color) {
-    //   tile.applyColor(color as number);
-    // }
-
-    // tile.anims.play(tile._texture + '_idle', true);
+    AlignTool.scaleToScreenWidth(this.scene, tile, 0.11);
     // tile.setScale(
     //   PreloadScene.screenScale.scaleWidth,
     //   PreloadScene.screenScale.scaleHeight
     // );
+    tile.setInteractive();
     return tile;
   }
 
@@ -68,6 +66,7 @@ export default class TilePool extends Phaser.Physics.Arcade.Group
     this.world.remove(tile.body);
     tile.alpha = 1;
     tile.body.reset(0, 0);
+    tile.disableInteractive();
     // tile.anims.stop();
   }
 }

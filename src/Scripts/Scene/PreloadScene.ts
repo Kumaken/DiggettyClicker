@@ -1,9 +1,17 @@
 import * as Phaser from 'phaser';
-import TextureKeys from '../Config/TextureKeys';
+import { TextureKeys } from '../Config/TextureKeys';
 import SceneKeys from '../Config/SceneKeys';
 import GameEvents from '../Config/GameEvents';
+import AlignTool from '../Util/AlignTool';
 
 export default class PreloadScene extends Phaser.Scene {
+  static screenScale: {
+    scaleWidth: number;
+    scaleHeight: number;
+  };
+  private tileFrameWidth: number = 17.9;
+  private tileFrameHeight: number = 17.9;
+
   constructor() {
     super({ key: SceneKeys.Preload });
   }
@@ -11,9 +19,9 @@ export default class PreloadScene extends Phaser.Scene {
   preload(): void {
     /* all the routes here is referenced from root! */
     this.load.spritesheet(
-      TextureKeys.TL_DIRT,
+      TextureKeys.TL_DIRT.key,
       'src/Assets/Tiles/dirt_Tiles_407.png',
-      { frameWidth: 18, frameHeight: 18 }
+      { frameWidth: this.tileFrameWidth, frameHeight: this.tileFrameHeight }
     );
 
     this.game.events.once(
@@ -24,6 +32,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   create(): void {
+    PreloadScene.screenScale = AlignTool.getScaleScreen(this);
+
     this.game.events.emit(GameEvents.PreloadFinished);
   }
 
