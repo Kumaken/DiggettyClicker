@@ -5,6 +5,7 @@ import GameEvents from '../Config/GameEvents';
 import AlignTool from '../Util/AlignTool';
 
 export default class PreloadScene extends Phaser.Scene {
+  private assetRoot = 'src/Assets/';
   static screenScale: {
     scaleWidth: number;
     scaleHeight: number;
@@ -18,10 +19,21 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload(): void {
     /* all the routes here is referenced from root! */
+    this.load.image(
+      TextureKeys.VB_TRACK.key,
+      `${this.assetRoot}QuantityBar/track.png`
+    );
+
     this.load.spritesheet(
       TextureKeys.TL_DIRT.key,
-      'src/Assets/Tiles/dirt_Tiles_407.png',
+      this.assetRoot + 'Tiles/dirt_Tiles_407.png',
       { frameWidth: this.tileFrameWidth, frameHeight: this.tileFrameHeight }
+    );
+
+    this.load.spritesheet(
+      TextureKeys.VB_BAR.key,
+      `${this.assetRoot}QuantityBar/bar.png`,
+      { frameWidth: 260, frameHeight: 32 }
     );
 
     this.game.events.once(

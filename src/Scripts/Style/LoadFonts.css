@@ -1,0 +1,13 @@
+@font-face {
+  font-family: SilkscreenA;
+  src: url('../../Assets/Fonts/slkscr.ttf');
+  font-weight: 400;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: SHPinscher-Regular;
+  src: url('../../Assets/Fonts/SHPinscher-Regular.otf');
+  font-weight: 400;
+  font-weight: normal;
+}

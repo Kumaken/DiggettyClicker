@@ -1,6 +1,6 @@
 import { ITextureKey } from './ITextureKey';
 
-export interface IPlatformStats {
+export interface IPlatformData {
   toughness: number;
   textureKey: ITextureKey;
 }

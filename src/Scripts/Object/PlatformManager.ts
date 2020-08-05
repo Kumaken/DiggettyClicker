@@ -4,15 +4,18 @@ import DepthConfig from '../Config/DepthConfig';
 import BubbleColorConfig from '../Config/BubbleColorConfig';
 import { Color } from '../Config/ColorConfig';
 import { TextureKeys } from '../Config/TextureKeys';
-import { IPlatformStats } from '../Interfaces/IPlatformStats';
+import { IPlatformData } from '../Interfaces/IPlatformData';
 import { ITextureKey } from '../Interfaces/ITextureKey';
 import { ITilePool } from '../Interfaces/ITilePool';
 import Platform from './Platform';
 import GameEvents from '../Config/GameEvents';
+import { PlatformData } from '../Data/PlatformData';
+import Player from './Player';
 
 export default class PlatformManager {
   private scene: Phaser.Scene;
   private pool: ITilePool;
+  private player: Player;
   private topMostY: number;
   private bottomMostY: number;
   private platformYInterval: number;
@@ -24,9 +27,14 @@ export default class PlatformManager {
   private tileWidthGap: number = 10;
   private tileHeightGap: number = 10;
 
-  constructor(scene: Phaser.Scene, pool: ITilePool) {
+  // Gameplay Related properties
+  private depthPerPlatform: number = 10;
+  private goldPerPlatform: number = 1;
+
+  constructor(scene: Phaser.Scene, pool: ITilePool, player: Player) {
     this.scene = scene;
     this.pool = pool;
+    this.player = player;
     this.topMostY = AlignTool.getYfromScreenHeight(scene, 0.68);
 
     // deduce tile size dynamically:
@@ -51,16 +59,16 @@ export default class PlatformManager {
     });
   }
 
-  spawnPlatformTopmost(key: string) {
-    const newPlatform = new Platform(
-      this.scene,
-      this.pool,
-      key,
-      this.topMostY,
-      this.tileSize
-    );
-    this.platforms.push(newPlatform);
-  }
+  // spawnPlatformTopmost(key: string) {
+  //   const newPlatform = new Platform(
+  //     this.scene,
+  //     this.pool,
+  //     key,
+  //     this.topMostY,
+  //     this.tileSize
+  //   );
+  //   this.platforms.push(newPlatform);
+  // }
 
   spawnPlatformInitial(textureKey: ITextureKey) {
     let curY = this.topMostY;
@@ -68,9 +76,9 @@ export default class PlatformManager {
       const newPlatform = new Platform(
         this.scene,
         this.pool,
-        textureKey.key,
         curY,
-        this.tileSize
+        this.tileSize,
+        PlatformData.Dirt
       );
       this.platforms.push(newPlatform);
       curY += this.tileSize.height;
@@ -91,21 +99,22 @@ export default class PlatformManager {
     });
   }
 
-  spawnBottommostPlatform(textureKey: ITextureKey) {
+  spawnBottommostPlatform(platformData: IPlatformData) {
     const newPlatform = new Platform(
       this.scene,
       this.pool,
-      textureKey.key,
       this.bottomMostY,
       this.tileSize,
-      textureKey.frame
+      platformData
     );
     this.platforms.push(newPlatform);
   }
 
   destroyTopmostPlatform() {
+    this.player.addDepth(this.depthPerPlatform);
+    this.player.addGold(this.goldPerPlatform);
     this.despawnTopmostPlatform();
     this.shiftAllPlatformsUpward();
-    this.spawnBottommostPlatform(TextureKeys.TL_ROCKY_DIRT);
+    this.spawnBottommostPlatform(PlatformData.RockyDirt);
   }
 }

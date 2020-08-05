@@ -10,6 +10,8 @@ import Tile from './Tile';
 import TilePool from './TilePool';
 import Player from './Player';
 import GameEvents from '../Config/GameEvents';
+import { IPlatformData } from '../Interfaces/IPlatformData';
+import Algorithm from '../Util/Algorithm';
 
 export default class Platform {
   public row: ITile[] = [];
@@ -17,8 +19,8 @@ export default class Platform {
 
   private scene: Phaser.Scene;
   private pool: ITilePool;
-  private textureKey: string;
-  private y: number;
+  private platformData: IPlatformData;
+  public y: number;
   private effRightX: number;
   private effLeftX: number;
   private tileSize: Phaser.Structs.Size;
@@ -29,33 +31,33 @@ export default class Platform {
   constructor(
     scene: Phaser.Scene,
     pool: ITilePool,
-    key: string,
     y: number,
     tileSize: Phaser.Structs.Size,
-    frame: number = 104
+    platformData: IPlatformData
   ) {
     this.scene = scene;
     this.pool = pool;
-    this.textureKey = key;
+    this.platformData = platformData;
     this.effLeftX = AlignTool.getXfromScreenWidth(scene, 0.115);
     this.effRightX = AlignTool.getXfromScreenWidth(scene, 0.8);
     this.y = y;
     this.tileSize = tileSize;
     // Stats initialization:
-    this.toughness = 0;
-    this.generateRow(frame);
+    this.toughness = platformData.toughness;
+    this.generateRow(platformData.textureKey.frame);
   }
 
-  generateRow(frame: number) {
+  generateRow(frameArr: number[]) {
     let curX = this.effLeftX;
 
     for (let i = 0; i < this.rowSize; i += 1) {
-      // Todo: randomize frame here
+      const randIdx = Algorithm.randomIntFromInterval(0, frameArr.length - 1);
+      const frame = frameArr[randIdx];
       const newTile: ITile = this.pool.spawn(
         curX,
         this.y,
-        this.textureKey,
-        frame // 104 frame number
+        this.platformData.textureKey.key,
+        frame
       );
       this.row.push(newTile);
       curX += this.tileSize.width;
@@ -64,6 +66,7 @@ export default class Platform {
   }
 
   shiftAllTilesUpward() {
+    this.y -= this.tileSize.height;
     this.row.forEach((tile) => {
       tile.y -= this.tileSize.height;
     });
@@ -75,6 +78,11 @@ export default class Platform {
   }
 
   onClickPlatform() {
+    this.scene.game.events.emit(
+      GameEvents.OnDamage,
+      this.y,
+      Player.clickDamage
+    );
     this.damage(Player.clickDamage);
   }
 
@@ -86,24 +94,3 @@ export default class Platform {
     }
   }
 }
-
-// Phaser.GameObjects.GameObjectFactory.register('bubble', function (
-//   x: number,
-//   y: number,
-//   texture: string,
-//   frame: string = ''
-// ) {
-//   // @ts-ignore
-//   var ball = new Ball(this.scene, x, y, texture, frame);
-
-//   // @ts-ignore
-//   this.displayList.add(ball);
-//   // @ts-ignore
-//   this.updateList.add(ball);
-//   // @ts-ignore
-//   this.scene.physics.world.enableBody(ball, Phaser.Physics.Arcade.DYNAMIC_BODY);
-
-//   ball.setCircle(ball.width * 0.5);
-
-//   return ball;
-// });

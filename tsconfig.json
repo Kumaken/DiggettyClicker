@@ -1,11 +1,12 @@
 {
-	"compilerOptions": {
-		"lib": ["dom", "es6", "ES2019"], // dom needed for window, URLSearchParams, etc. ;es6 needed for polyfill functions such as string.includes(); es2019 needed for Object.fromEntries function
-		"target": "es5"
-	},
-	"include": ["src/Scripts/app.ts", "src/Scripts/Types"],
-	"typeRoots": ["node_modules/@types", "node_module/phaser/types"],
-	"types": ["Phaser"],
-	"esModuleInterop": true,
-	"allowSyntheticDefaultImports": true,
+  "compilerOptions": {
+    "lib": ["dom", "es6", "ES2019"], // dom needed for window, URLSearchParams, etc. ;es6 needed for polyfill functions such as string.includes(); es2019 needed for Object.fromEntries function
+    "target": "es5",
+    "jsx": "react"
+  },
+  "include": ["src/Scripts/app.ts", "src/Scripts/Types"],
+  "typeRoots": ["node_modules/@types", "node_module/phaser/types"],
+  "types": ["Phaser"],
+  "esModuleInterop": true,
+  "allowSyntheticDefaultImports": true
 }

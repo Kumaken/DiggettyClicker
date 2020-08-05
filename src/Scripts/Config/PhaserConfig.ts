@@ -23,5 +23,9 @@ export const config: PhaserConfig = {
       debug: false
     }
   },
-  backgroundColor: '#493a52'
+  backgroundColor: '#493a52',
+  parent: 'phaser-ui',
+  dom: {
+    createContainer: true
+  }
 };
