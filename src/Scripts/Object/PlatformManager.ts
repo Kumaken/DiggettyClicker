@@ -16,7 +16,6 @@ export default class PlatformManager {
   private scene: Phaser.Scene;
   private pool: ITilePool;
   private player: Player;
-  private topMostY: number;
   private bottomMostY: number;
   private platformYInterval: number;
   private platforms: Platform[] = [];
@@ -31,11 +30,15 @@ export default class PlatformManager {
   private depthPerPlatform: number = 10;
   private goldPerPlatform: number = 1;
 
+  // Static properties
+  public static topMostY: number;
+  public static topMostPlatform: Platform;
+
   constructor(scene: Phaser.Scene, pool: ITilePool, player: Player) {
     this.scene = scene;
     this.pool = pool;
     this.player = player;
-    this.topMostY = AlignTool.getYfromScreenHeight(scene, 0.68);
+    PlatformManager.topMostY = AlignTool.getYfromScreenHeight(scene, 0.68);
 
     // deduce tile size dynamically:
     const sample = this.pool.spawn(0, 0, '', 0);
@@ -46,7 +49,7 @@ export default class PlatformManager {
     this.pool.despawn(sample);
 
     // listen to game events:
-    this.scene.game.events.on(
+    this.scene.events.on(
       GameEvents.TopmostPlatformDestroyed,
       this.destroyTopmostPlatform,
       this
@@ -59,20 +62,19 @@ export default class PlatformManager {
     });
   }
 
-  // spawnPlatformTopmost(key: string) {
-  //   const newPlatform = new Platform(
-  //     this.scene,
-  //     this.pool,
-  //     key,
-  //     this.topMostY,
-  //     this.tileSize
-  //   );
-  //   this.platforms.push(newPlatform);
-  // }
-
   spawnPlatformInitial(textureKey: ITextureKey) {
-    let curY = this.topMostY;
-    for (let i = 0; i < this.rowNums; i++) {
+    let curY = PlatformManager.topMostY;
+    PlatformManager.topMostPlatform = new Platform(
+      this.scene,
+      this.pool,
+      curY,
+      this.tileSize,
+      PlatformData.Dirt
+    );
+    this.platforms.push(PlatformManager.topMostPlatform);
+    curY += this.tileSize.height;
+
+    for (let i = 1; i < this.rowNums; i++) {
       const newPlatform = new Platform(
         this.scene,
         this.pool,
@@ -84,6 +86,8 @@ export default class PlatformManager {
       curY += this.tileSize.height;
     }
     this.bottomMostY = curY - this.tileSize.height;
+
+    this.scene.events.emit(GameEvents.TopmostPlatformChanged);
   }
 
   despawnTopmostPlatform() {
@@ -91,6 +95,8 @@ export default class PlatformManager {
     topMost.forEach((tile) => {
       this.pool.despawn(tile);
     });
+    PlatformManager.topMostPlatform = this.platforms[0];
+    // this.scene.events.emit(GameEvents.TopmostPlatformChanged);
   }
 
   shiftAllPlatformsUpward() {

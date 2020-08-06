@@ -5,6 +5,8 @@ import Algorithm from '../Util/Algorithm';
 import GameEvents from '../Config/GameEvents';
 import PreloadScene from '../Scene/PreloadScene';
 import FontKeys from '../Config/FontKeys';
+import PlatformManager from './PlatformManager';
+import Player from './Player';
 
 export default class DamageTextPool extends Phaser.GameObjects.Group
   implements IDamageTextPool {
@@ -69,10 +71,14 @@ Phaser.GameObjects.GameObjectFactory.register('damageTextPool', function (
   this.updateList.add(pool);
 
   // listen to damage events:
-  this.scene.game.events.on(
+  this.scene.events.on(
     GameEvents.OnDamage,
-    (y, damage) => {
-      pool.spawn(AlignTool.getCenterHorizontal(this.scene), y, damage);
+    () => {
+      pool.spawn(
+        AlignTool.getCenterHorizontal(this.scene),
+        PlatformManager.topMostY,
+        Player.clickDamage
+      );
     },
     this
   );

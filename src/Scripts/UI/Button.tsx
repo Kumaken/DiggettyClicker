@@ -1,4 +1,4 @@
-import React from '../../../jsx-dom-shim';
+import React from './jsx-dom-shim';
 
 const Button = (
   <button class="button is-primary is-large">
@@ -7,6 +7,6 @@ const Button = (
     </span>
     <span>Play</span>
   </button>
-);
+) as HTMLElement;
 
 export default Button;

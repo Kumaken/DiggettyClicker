@@ -19,14 +19,14 @@ export default class Platform {
 
   private scene: Phaser.Scene;
   private pool: ITilePool;
-  private platformData: IPlatformData;
+  public platformData: IPlatformData;
   public y: number;
   private effRightX: number;
   private effLeftX: number;
   private tileSize: Phaser.Structs.Size;
 
   // Platform Stats:
-  private toughness: number;
+  public toughness: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -74,16 +74,12 @@ export default class Platform {
 
   // Events:
   onDestruction() {
-    this.scene.game.events.emit(GameEvents.TopmostPlatformDestroyed);
+    this.scene.events.emit(GameEvents.TopmostPlatformDestroyed);
   }
 
   onClickPlatform() {
-    this.scene.game.events.emit(
-      GameEvents.OnDamage,
-      this.y,
-      Player.clickDamage
-    );
     this.damage(Player.clickDamage);
+    this.scene.events.emit(GameEvents.OnDamage);
   }
 
   // Platform stats methods:

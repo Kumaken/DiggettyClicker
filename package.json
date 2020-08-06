@@ -36,7 +36,9 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "css-loader": "^4.2.0",
     "jsx-dom": "^6.4.19",
-    "phaser-ui-tools": "^2.0.0-beta"
+    "phaser-ui-tools": "^2.0.0-beta",
+    "style-loader": "^1.2.1"
   }
 }
