@@ -19,3 +19,23 @@
   right: 1rem;
   float: right;
 }
+
+/* bottom tab */
+.bottom-tab {
+  width: 100%;
+}
+
+.tab-entry {
+  height: 12vw;
+}
+
+.align-both-center {
+  display: flex;
+  align-items: center; /* vertically */
+  justify-content: center; /* horizontally */
+}
+
+.content-tab {
+  max-height: 24vw;
+  overflow: auto;
+}

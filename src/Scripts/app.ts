@@ -2,6 +2,7 @@ import 'phaser';
 import { config, PhaserConfig } from './Config/PhaserConfig';
 import registerScenes from './registerScenes';
 import SceneKeys from './Config/SceneKeys';
+require('./Style/config.scss');
 
 let game: PhaserGame;
 

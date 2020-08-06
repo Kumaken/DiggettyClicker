@@ -38,7 +38,7 @@ export default class PlatformManager {
     this.scene = scene;
     this.pool = pool;
     this.player = player;
-    PlatformManager.topMostY = AlignTool.getYfromScreenHeight(scene, 0.68);
+    PlatformManager.topMostY = AlignTool.getYfromScreenHeight(scene, 0.412);
 
     // deduce tile size dynamically:
     const sample = this.pool.spawn(0, 0, '', 0);

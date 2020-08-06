@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/Scripts/app.ts',
@@ -12,6 +13,23 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      // sass for modifying bulma vars
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+              // options...
+            }
+          }
+        ]
       },
       {
         test: /\.(png|jp(e*)g|svg|ogg|mp3)$/,
@@ -39,5 +57,10 @@ module.exports = {
   devServer: {
     watchContentBase: true
   },
-  mode: 'development'
+  mode: 'development',
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/global_style.css'
+    })
+  ]
 };

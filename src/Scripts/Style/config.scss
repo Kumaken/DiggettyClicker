@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+$scheme-main: #614105;
+$background: #220901;
+$border: #621708;
+
+// $tabs-boxed-link-hover-background-color: #f8c462;
+// $tabs-boxed-link-active-border-color: #bc3908;
+// $tabs-boxed-link-active-background-color: #f6aa1c;
+// $tabs-border-bottom-color: #f8c462;
+$tabs-toggle-link-hover-background-color: #f6b53c;
+$tabs-toggle-link-hover-border-color: #f8c462;
+$tabs-toggle-link-active-background-color: #bc3908;
+$tabs-toggle-link-active-border-color: #621708;
+// $tabs-toggle-link-active-color: #f8c462;
+
+// texts:
+$text: #e9e9e9;
+$title-color: #e9e9e9;
+// YOU MUST IMPORT LAST!
+@import '../../../node_modules/bulma/bulma.sass';
+
+// Import only what you need from Bulma
+// @import '../../../node_modules/bulma/sass/utilities/_all.sass';
+// @import '../../../node_modules/bulma/sass/base/_all.sass';
+// @import '../../../node_modules/bulma/sass/elements/button.sass';
+// @import '../../../node_modules/bulma/sass/elements/container.sass';
+// @import '../../../node_modules/bulma/sass/elements/title.sass';
+// @import '../../../node_modules/bulma/sass/form/_all.sass';
+// @import '../../../node_modules/bulma/sass/components/tabs.sass';
+// @import '../../../node_modules/bulma/sass/layout/hero.sass';
+// @import '../../../node_modules/bulma/sass/layout/section.sass';

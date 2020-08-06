@@ -7,15 +7,19 @@ import PreloadScene from '../Scene/PreloadScene';
 import FontKeys from '../Config/FontKeys';
 import PlatformManager from './PlatformManager';
 import Player from './Player';
+import UIText from '../UI/UIText';
+import { Title } from '../UI/TextElements';
 
 export default class DamageTextPool extends Phaser.GameObjects.Group
   implements IDamageTextPool {
+  public scene: Phaser.Scene;
+
   constructor(
     scene: Phaser.Scene,
     config: Phaser.Types.GameObjects.Group.GroupCreateConfig = {}
   ) {
     const defaults: Phaser.Types.GameObjects.Group.GroupCreateConfig = {
-      classType: Phaser.GameObjects.Text,
+      classType: Phaser.GameObjects.DOMElement,
       active: false,
       visible: false,
       frameQuantity: 10
@@ -23,21 +27,24 @@ export default class DamageTextPool extends Phaser.GameObjects.Group
     super(scene, Object.assign(defaults, config));
   }
 
-  spawn(x: number, y: number, damage: number): Phaser.GameObjects.Text {
+  spawn(x: number, y: number, damage: number): Phaser.GameObjects.DOMElement {
     const spawnExisting = this.countActive(false) > 0;
-    const DamageText: Phaser.GameObjects.Text = this.get(x, y - 50);
+    // const DamageText: Phaser.GameObjects.DOMElement = this.get(x, y - 50);
+    let DamageText: Phaser.GameObjects.DOMElement = this.getFirst(false);
+
     if (!DamageText) {
-      return DamageText;
+      // no more exists:
+      DamageText = new UIText(this.scene, x, y, Title(`${damage}`));
+      this.add(DamageText);
+      // return DamageText;
     }
 
     if (spawnExisting) {
       DamageText.setVisible(true);
       DamageText.setActive(true);
+      DamageText.update(Title(`${damage}`));
     }
 
-    DamageText.text = damage.toLocaleString();
-    DamageText.setFontSize(80 * PreloadScene.screenScale.scaleWidth);
-    DamageText.setFontFamily(FontKeys.SHPinscherRegular);
     AlignTool.scaleToScreenWidth(this.scene, DamageText, 0.05);
 
     // Animation:
@@ -55,10 +62,9 @@ export default class DamageTextPool extends Phaser.GameObjects.Group
     return DamageText;
   }
 
-  despawn(DamageText: Phaser.GameObjects.Text): void {
+  despawn(DamageText: Phaser.GameObjects.DOMElement): void {
     this.killAndHide(DamageText);
     DamageText.alpha = 1;
-    // DamageText.anims.stop();
   }
 }
 

@@ -10,18 +10,21 @@ import GameEvents from '../Config/GameEvents';
 import { TextureKeys } from '../Config/TextureKeys';
 import Button from '../UI/Button';
 import ToughnessBar from '../UI/ToughnessBar';
-import { IPlatformData } from '../Interfaces/IPlatformData';
 import PlatformManager from '../Object/PlatformManager';
 import BottomTab from '../UI/BottomTab';
 import { DepthString, GoldString } from '../Data/TextString';
 import UIText from '../UI/UIText';
 import { Title, SubTitle } from '../UI/TextElements';
+import UpgradeManager from '../UI/UpgradeManager';
+import BottomMenuManager from '../UI/BottomMenuManager';
 
 export default class GameUI extends Phaser.Scene {
   private depthText?: Phaser.GameObjects.DOMElement;
   private goldText?: Phaser.GameObjects.DOMElement;
   private gameScene: Phaser.Scene;
   private platformToughnessBar: Phaser.GameObjects.DOMElement;
+  private upgradeManager: UpgradeManager;
+  private bottomMenuManager: BottomMenuManager;
 
   constructor() {
     super({ key: SceneKeys.GameUI });
@@ -51,24 +54,30 @@ export default class GameUI extends Phaser.Scene {
     });
   }
 
-  createBottomTab() {
-    this.add.dom(
-      AlignTool.getCenterHorizontal(this),
-      AlignTool.getCenterVertical(this),
-      BottomTab
-    );
-  }
+  // createBottomTab() {
+  //   this.add.dom(
+  //     AlignTool.getCenterHorizontal(this),
+  //     AlignTool.getCenterVertical(this),
+  //     BottomTab
+  //   );
+  // }
 
   create(): void {
     this.gameScene = this.scene.get(SceneKeys.Game);
     this.setupTexts();
-    this.setupButtons();
+    // this.setupButtons();
     this.platformToughnessBar = new ToughnessBar(
       this,
       AlignTool.getCenterHorizontal(this.gameScene),
       PlatformManager.topMostY
     );
-    this.createBottomTab();
+    // this.createBottomTab();
+    this.upgradeManager = new UpgradeManager();
+    this.bottomMenuManager = new BottomMenuManager(
+      this.gameScene,
+      this.upgradeManager
+    );
+    this.bottomMenuManager.createBottomMenu();
 
     // listen for events:
     this.gameScene.events.on(
