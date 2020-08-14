@@ -64,6 +64,8 @@ export default class DamageTextPool extends Phaser.GameObjects.Group
 
   despawn(DamageText: Phaser.GameObjects.DOMElement): void {
     this.killAndHide(DamageText);
+    DamageText.x = AlignTool.getCenterHorizontal(this.scene);
+    DamageText.y = PlatformManager.topMostY;
     DamageText.alpha = 1;
   }
 }

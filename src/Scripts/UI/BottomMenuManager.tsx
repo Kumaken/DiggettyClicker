@@ -4,17 +4,17 @@ import BottomTab from '../UI/BottomTab';
 
 export default class BottomMenuManager {
   private UpgradeManager: UpgradeManager;
-  private scene: Phaser.Scene;
+  private gameScene: Phaser.Scene;
 
-  constructor(scene: Phaser.Scene, upgradeManager: UpgradeManager) {
-    this.UpgradeManager = upgradeManager;
-    this.scene = scene;
+  constructor(scene: Phaser.Scene) {
+    this.UpgradeManager = new UpgradeManager(scene);
+    this.gameScene = scene;
   }
 
   createBottomMenu() {
-    this.scene.add.dom(
-      AlignTool.getCenterHorizontal(this.scene),
-      AlignTool.getYfromScreenHeight(this.scene, 0.845),
+    this.gameScene.add.dom(
+      AlignTool.getCenterHorizontal(this.gameScene),
+      AlignTool.getYfromScreenHeight(this.gameScene, 0.845),
       BottomTab(this.UpgradeManager.createUpgradeList())
     );
   }

@@ -1,9 +1,23 @@
 import React from './jsx-dom-shim';
 import './card.scss';
 import { IUpgradeData } from '../Interfaces/IUpgradeData';
+import GameEvents from '../Config/GameEvents';
 
-export const TabEntry = (upgradeData: IUpgradeData, cur_cost: number) => (
-  <div key={upgradeData.key} class="container is-marginless">
+const issueUpgradeLevelUp = (scene: Phaser.Scene, key: string) => {
+  scene.events.emit(GameEvents.OnUpgradeIssued, key);
+};
+
+export const TabEntry = (
+  key: string,
+  upgradeData: IUpgradeData,
+  cur_cost: number,
+  scene: Phaser.Scene
+) => (
+  <div
+    key={key}
+    class="container is-marginless"
+    onClick={() => issueUpgradeLevelUp(scene, key)}
+  >
     <div class="card is-horizontal tab-entry">
       <div class="card-image align-both-center">
         <figure class="image is-64x64">

@@ -72,11 +72,7 @@ export default class GameUI extends Phaser.Scene {
       PlatformManager.topMostY
     );
     // this.createBottomTab();
-    this.upgradeManager = new UpgradeManager();
-    this.bottomMenuManager = new BottomMenuManager(
-      this.gameScene,
-      this.upgradeManager
-    );
+    this.bottomMenuManager = new BottomMenuManager(this.gameScene);
     this.bottomMenuManager.createBottomMenu();
 
     // listen for events:

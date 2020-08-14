@@ -17,7 +17,7 @@ export const UpgradeData = {
     costUpRatio: 2,
     baseDMG: 1,
     dmgGrowthType: 'exponential',
-    dmgUpRatio: 2
+    dmgUpRatio: 1
   },
   Bicep2: {
     key: 'bicep2',

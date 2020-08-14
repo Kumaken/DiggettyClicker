@@ -4,7 +4,8 @@ enum GameEvents {
   TopmostPlatformChanged = 'TOPMOST_PLATFORM_CHANGED',
   OnDamage = 'ON_DAMAGE',
   OnDepthChanged = 'ON_DEPTH_CHANGED',
-  OnGoldChanged = 'ON_GOLD_CHANGED'
+  OnGoldChanged = 'ON_GOLD_CHANGED',
+  OnUpgradeIssued = 'ON_UPGRADE_ISSUED'
 }
 
 export default GameEvents;
