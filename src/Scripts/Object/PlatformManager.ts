@@ -20,7 +20,7 @@ export default class PlatformManager {
   private platformYInterval: number;
   private platforms: Platform[] = [];
   private tileSize: Phaser.Structs.Size;
-  private rowNums: number = 6;
+  private rowNums: number = 4;
 
   // NOTE DELETE THIS IF NOT USING TERRARIA TILES: to handle the gap from the tilesheet
   private tileWidthGap: number = 10;
@@ -38,7 +38,7 @@ export default class PlatformManager {
     this.scene = scene;
     this.pool = pool;
     this.player = player;
-    PlatformManager.topMostY = AlignTool.getYfromScreenHeight(scene, 0.412);
+    PlatformManager.topMostY = AlignTool.getYfromScreenHeight(scene, 0.49);
 
     // deduce tile size dynamically:
     const sample = this.pool.spawn(0, 0, '', 0);

@@ -14,7 +14,7 @@ export default class BottomMenuManager {
   createBottomMenu() {
     this.scene.add.dom(
       AlignTool.getCenterHorizontal(this.scene),
-      AlignTool.getYfromScreenHeight(this.scene, 0.87),
+      AlignTool.getYfromScreenHeight(this.scene, 0.845),
       BottomTab(this.UpgradeManager.createUpgradeList())
     );
   }
