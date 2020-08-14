@@ -1,5 +1,5 @@
 import React from './jsx-dom-shim';
-import './card.scss';
+import './TabEntry.scss';
 import { IUpgradeData } from '../Interfaces/IUpgradeData';
 import GameEvents from '../Config/GameEvents';
 

@@ -1,6 +1,10 @@
-body {
-	margin-top: 3rem;
-	margin-bottom: 3rem;
+.tab-entry {
+	height: 12rem;
+	cursor: pointer; // change mouse cursor to pointer manually
+}
+
+.tab-entry:hover {
+	background-color: #e76f51;
 }
 
 .card {
