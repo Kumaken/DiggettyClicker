@@ -13,6 +13,8 @@ export default class Player {
     this.upgradeProgress.levelUpProgress(key);
     const dmgChange = this.upgradeProgress.calculateDamageIncrease(key);
     Player.clickDamage += dmgChange;
+
+    this.scene.events.emit(GameEvents.OnUpgradeDone);
   }
 
   constructor(scene: Phaser.Scene) {

@@ -2,7 +2,7 @@ import * as Phaser from 'phaser';
 import FpsText from '../Object/FpsText';
 import PlatformManager from '../Object/PlatformManager';
 import { ITilePool } from '../Interfaces/ITilePool';
-import { TextureKeys } from '../Config/TextureKeys';
+import { TexturePreloadKeys } from '../Config/TexturePreloadKeys';
 import SceneKeys from '../Config/SceneKeys';
 import Player from '../Object/Player';
 import GameUI from './GameUI';
@@ -33,10 +33,12 @@ export default class LevelScene extends Phaser.Scene {
     this.scene.bringToTop(SceneKeys.GameUI);
 
     this.player = new Player(this);
-    const TilePool: ITilePool = this.add.tilePool(TextureKeys.TL_DIRT.key);
+    const TilePool: ITilePool = this.add.tilePool(
+      TexturePreloadKeys.TL_DIRT.key
+    );
     const DamageTextPool: IDamageTextPool = this.add.damageTextPool();
     this.platformManager = new PlatformManager(this, TilePool, this.player);
-    this.platformManager.spawnPlatformInitial(TextureKeys.TL_DIRT);
+    this.platformManager.spawnPlatformInitial(TexturePreloadKeys.TL_DIRT);
   }
 
   update(): void {

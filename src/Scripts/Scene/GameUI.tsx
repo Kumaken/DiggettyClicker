@@ -7,7 +7,7 @@ import AnimationHelper from '../Util/AnimationHelper';
 import FontKeys from '../Config/FontKeys';
 import PreloadScene from './PreloadScene';
 import GameEvents from '../Config/GameEvents';
-import { TextureKeys } from '../Config/TextureKeys';
+import { TexturePreloadKeys } from '../Config/TexturePreloadKeys';
 import Button from '../UI/Button';
 import ToughnessBar from '../UI/ToughnessBar';
 import PlatformManager from '../Object/PlatformManager';
@@ -17,6 +17,8 @@ import UIText from '../UI/UIText';
 import { Title, SubTitle } from '../UI/TextElements';
 import UpgradeManager from '../UI/UpgradeManager';
 import BottomMenuManager from '../UI/BottomMenuManager';
+import PlayerStats from '../UI/PlayerStats';
+import Player from '../Object/Player';
 
 export default class GameUI extends Phaser.Scene {
   private depthText?: Phaser.GameObjects.DOMElement;
@@ -25,6 +27,7 @@ export default class GameUI extends Phaser.Scene {
   private platformToughnessBar: Phaser.GameObjects.DOMElement;
   private upgradeManager: UpgradeManager;
   private bottomMenuManager: BottomMenuManager;
+  private playerStats: PlayerStats;
 
   constructor() {
     super({ key: SceneKeys.GameUI });
@@ -75,6 +78,8 @@ export default class GameUI extends Phaser.Scene {
     this.bottomMenuManager = new BottomMenuManager(this.gameScene);
     this.bottomMenuManager.createBottomMenu();
 
+    // Player Stats:
+    this.playerStats = new PlayerStats(this.gameScene);
     // listen for events:
     this.gameScene.events.on(
       GameEvents.OnDepthChanged,

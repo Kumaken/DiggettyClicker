@@ -3,7 +3,7 @@ import AlignTool from '../Util/AlignTool';
 import DepthConfig from '../Config/DepthConfig';
 import BubbleColorConfig from '../Config/BubbleColorConfig';
 import { Color } from '../Config/ColorConfig';
-import { TextureKeys } from '../Config/TextureKeys';
+import { TexturePreloadKeys } from '../Config/TexturePreloadKeys';
 import { IPlatformData } from '../Interfaces/IPlatformData';
 import { ITextureKey } from '../Interfaces/ITextureKey';
 import { ITilePool } from '../Interfaces/ITilePool';

@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { TextureKeys } from '../Config/TextureKeys';
+import { TexturePreloadKeys } from '../Config/TexturePreloadKeys';
 import SceneKeys from '../Config/SceneKeys';
 import GameEvents from '../Config/GameEvents';
 import AlignTool from '../Util/AlignTool';
@@ -20,20 +20,27 @@ export default class PreloadScene extends Phaser.Scene {
   preload(): void {
     /* all the routes here is referenced from root! */
     this.load.image(
-      TextureKeys.VB_TRACK.key,
+      TexturePreloadKeys.VB_TRACK.key,
       `${this.assetRoot}QuantityBar/track.png`
     );
 
     this.load.spritesheet(
-      TextureKeys.TL_DIRT.key,
+      TexturePreloadKeys.TL_DIRT.key,
       this.assetRoot + 'Tiles/dirt_Tiles_407.png',
       { frameWidth: this.tileFrameWidth, frameHeight: this.tileFrameHeight }
     );
 
     this.load.spritesheet(
-      TextureKeys.VB_BAR.key,
+      TexturePreloadKeys.VB_BAR.key,
       `${this.assetRoot}QuantityBar/bar.png`,
       { frameWidth: 260, frameHeight: 32 }
+    );
+
+    // Load Icons:
+    this.load.spritesheet(
+      TexturePreloadKeys.IC_MINECRAFT.key,
+      `${this.assetRoot}Icons/minecraft_transparent.png`,
+      { frameWidth: 18, frameHeight: 18 }
     );
 
     this.game.events.once(

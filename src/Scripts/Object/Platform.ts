@@ -5,7 +5,7 @@ import BubbleColorConfig from '../Config/BubbleColorConfig';
 import { Color } from '../Config/ColorConfig';
 import { ITile } from '../Interfaces/ITile';
 import { ITilePool } from '../Interfaces/ITilePool';
-import { TextureKeys } from '../Config/TextureKeys';
+import { TexturePreloadKeys } from '../Config/TexturePreloadKeys';
 import Tile from './Tile';
 import TilePool from './TilePool';
 import Player from './Player';

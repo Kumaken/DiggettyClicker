@@ -10,3 +10,6 @@ export const SubTitle = (text: string) =>
   (
     <h3 class="subtitle is-3 has-text-white silk-screen-A">{text}</h3>
   ) as HTMLElement;
+
+export const StatsText = (text: string | number) =>
+  (<span class="tag is-danger is-medium ">{text}</span>) as HTMLElement;
